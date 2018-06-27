@@ -29,8 +29,6 @@
     },
     // Reading mapbox token from environment variable
     plugins: [
-        new webpack.EnvironmentPlugin({
-          MapboxAccessToken: 'pk.eyJ1IjoibWFyeXphbSIsImEiOiJjamlzenVxYmIxd2dmM2tyenltbHppZ2twIn0.S7rPnQ07vc2OXvkBNnDpRg'
-        })
+        new webpack.EnvironmentPlugin(["MapboxAccessToken"])
     ]
  };
