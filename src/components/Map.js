@@ -1,25 +1,17 @@
 
 import React from 'react';
-//import KeplerGl from 'kepler.gl';
-import * as cn from 'kepler.gl/components';
-console.log("---");
-const keys = Object.keys(cn).filter((x) => x.includes('Factory'));
-console.log(keys);
-console.log(cn);
-console.log("---");
+import { injectComponents, ModalContainerFactory, SidePanelFactory} from 'kepler.gl/components';
 
 const mapboxAccessToken = process.env.MapboxAccessToken;
-
-import {injectComponents, LoadDataModalFactory, ModalContainerFactory} from 'kepler.gl/components';
  
-// define custom header
-const NullPh = () => null;
-const myCustomFactory = () => NullPh;
+// define null factory to don not renrder any unnesesary components
+const NullComponent = () => null;
+const nullComponentFactory = () => NullPh;
  
-// Inject custom header into Kepler.gl, replacing default
+// Remove default upload modal dialog & side panel 
 const KeplerGl = injectComponents([
-  [LoadDataModalFactory, myCustomFactory],
-  [ModalContainerFactory, myCustomFactory],
+  [ModalContainerFactory, nullComponentFactory],
+  [SidePanelFactory, nullComponentFactory],
 ]);
 
 const Map = (props) => (
