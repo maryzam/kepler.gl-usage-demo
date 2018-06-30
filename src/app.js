@@ -1,6 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { throttle } from 'lodash';
+import { addDataToMap, receiveMapConfig } from 'kepler.gl/actions';
+
 import Map from './components/Map';
+import { default as config } from './configs/map';
+
+import Processors from 'kepler.gl/processors';
+import parkingData from './data/parking-csv';
 
 class App extends React.Component {
 
@@ -17,6 +24,17 @@ class App extends React.Component {
 	}
 
 	componentDidMount() {
+		this.props.dispatch(addDataToMap({
+			datasets: [{
+	          	info: {
+	           		label: 'Moscow Paid Parking',
+	           		id: 'parking_data'
+	           	},
+	          	data: Processors.processCsvData(parkingData)
+	        }],
+	        config
+		}));
+
 		this.onResize = throttle(this._updateSize, 150, { trailing: true });
 		window.addEventListener('resize', this.onResize);
 	}
@@ -37,4 +55,10 @@ class App extends React.Component {
 	}
 }
 
-export default App;
+const mapStateToProps = state => state;
+const dispatchToProps = dispatch => ({dispatch});
+
+export default connect(
+  mapStateToProps,
+  dispatchToProps
+)(App);
