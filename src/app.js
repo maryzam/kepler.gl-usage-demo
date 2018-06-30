@@ -1,18 +1,40 @@
 import React from 'react';
+import { throttle } from 'lodash';
 import Map from './components/Map';
 
-import sampleData from './data/sample';
+class App extends React.Component {
 
-console.log(sampleData);
+	state = {
+		width: window.innerWidth,
+    	height: window.innerHeight
+	};
 
-const App = (props) => {
+	_updateSize = () => {
+		this.setState({
+	      width: window.innerWidth,
+	      height: window.innerHeight
+	    });
+	}
 
-	return ( 
-		<Map 
-			data={sampleData} 
-			width={900}
-			height={600}
-		/>);
+	componentDidMount() {
+		this.onResize = throttle(this._updateSize, 150, { trailing: true });
+		window.addEventListener('resize', this.onResize);
+	}
+
+	componentWillUnmount() {
+		 window.removeEventListener('resize', this.onResize);
+	}
+
+	render() {
+		const { width, height } = this.state;
+
+		return (
+			<Map 
+				width={ width }
+				height={ height }
+			/>
+		);
+	}
 }
 
 export default App;
