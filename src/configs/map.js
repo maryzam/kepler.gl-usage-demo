@@ -1,4 +1,5 @@
 import pointLayer from './pointLayer'
+import gridLayer from './gridLayer'
 
 const mapStyle = {
 	 styleType: "dark",
@@ -11,16 +12,6 @@ const mapStyle = {
 	    "water": true,
 	    "land": true
 	 }
-};
-
-const mapState = {
-	"bearing": 0,
-	"dragRotate": false,
-	"latitude": 55.7558,
-	"longitude": 37.6173,
-	"pitch": 0,
-	"zoom": 11,
-	"isSplit": false
 };
 
 const interactionConfig = {
@@ -41,21 +32,17 @@ const interactionConfig = {
     }
 };
 
-const layers = [
-  pointLayer
-];
-
 export default {
     version: "v1",
     config: {
       visState: {
       	filters: [],
-        layers,
+        layers: [ gridLayer.config ],
       	interactionConfig,
       	layerBlending: "normal",
         splitMaps: []
       },
-      mapState,
+      mapState: gridLayer.mapState,
       mapStyle
     }
 };

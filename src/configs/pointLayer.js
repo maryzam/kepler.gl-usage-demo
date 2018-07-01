@@ -44,9 +44,21 @@ const layerConfig = {
         visConfig: pointConfig
 	};
 
-export default {
+const config = {
 	id: "point_layer",
 	type: "point",
 	config: layerConfig,
 	visualChannels
 };
+
+const mapState = {
+  "bearing": 0,
+  "dragRotate": false,
+  "latitude": 55.7558,
+  "longitude": 37.6173,
+  "pitch": 0,
+  "zoom": 11,
+  "isSplit": false
+};
+
+export default { config, mapState };

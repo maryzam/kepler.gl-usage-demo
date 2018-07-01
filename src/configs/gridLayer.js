@@ -50,9 +50,21 @@ const layerConfig = {
         visConfig: cellConfig
   };
 
-export default {
+const config = {
   id: "grid_layer",
   type: "grid",
   config: layerConfig,
   visualChannels
 };
+
+const mapState = {
+    "bearing": 25,
+    "dragRotate": true,
+    "latitude": 55.7558,
+    "longitude": 37.6173,
+    "pitch": 20,
+    "zoom": 9,
+    "isSplit": false
+};
+
+export default { config, mapState };
