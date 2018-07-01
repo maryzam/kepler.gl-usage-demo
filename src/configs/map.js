@@ -1,5 +1,21 @@
-import pointLayer from './pointLayer'
-import gridLayer from './gridLayer'
+import pointSettings from './pointLayer';
+import gridSettings from './gridLayer';
+
+export const MAP_MODE = {
+  POINTS: "POINTS",
+  GRID: "GRID"
+};
+
+function getModeSettings(mode) {
+    switch(mode) {
+        case MAP_MODE.POINTS:
+          return pointSettings;
+        case MAP_MODE.GRID:
+          return gridSettings;
+        default:
+          return pointSettings;
+    }
+};
 
 const mapStyle = {
 	 styleType: "dark",
@@ -32,17 +48,22 @@ const interactionConfig = {
     }
 };
 
-export default {
-    version: "v1",
-    config: {
-      visState: {
-      	filters: [],
-        layers: [ gridLayer.config ],
-      	interactionConfig,
-      	layerBlending: "normal",
-        splitMaps: []
-      },
-      mapState: gridLayer.mapState,
-      mapStyle
-    }
+export function getMapConfig(mode) {
+  
+  const settings = getModeSettings(mode);
+
+  return {
+      version: "v1",
+      config: {
+        visState: {
+          filters: [],
+          layers: [ settings.config ],
+          interactionConfig,
+          layerBlending: "normal",
+          splitMaps: []
+        },
+        mapState: settings.mapState,
+        mapStyle
+      }
+  };
 };

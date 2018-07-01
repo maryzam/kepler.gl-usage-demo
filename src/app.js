@@ -4,7 +4,7 @@ import { throttle } from 'lodash';
 import { addDataToMap, receiveMapConfig } from 'kepler.gl/actions';
 
 import Map from './components/Map';
-import { default as config } from './configs/map';
+import { getMapConfig, MAP_MODE } from './configs/map';
 
 import Processors from 'kepler.gl/processors';
 import parkingData from './data/parking-csv';
@@ -12,6 +12,7 @@ import parkingData from './data/parking-csv';
 class App extends React.Component {
 
 	state = {
+		mapMode: MAP_MODE.POINTS,
 		width: window.innerWidth,
     	height: window.innerHeight
 	};
@@ -24,6 +25,9 @@ class App extends React.Component {
 	}
 
 	componentDidMount() {
+		const { mapMode } = this.state;
+		const config = getMapConfig(mapMode);
+
 		this.props.dispatch(addDataToMap({
 			datasets: [{
 	          	info: {
