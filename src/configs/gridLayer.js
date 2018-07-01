@@ -31,7 +31,7 @@ const cellConfig = {
         sizeRange: [ 0, 500 ],
         percentile: [ 0, 100 ],
         elevationPercentile: [ 0, 100 ],
-        elevationScale": 5,
+        elevationScale: 5,
         "hi-precision": false,
         colorAggregation: "average",
         sizeAggregation: "sum",
