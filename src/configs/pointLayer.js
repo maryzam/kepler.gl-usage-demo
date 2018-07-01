@@ -55,7 +55,7 @@ const mapState = {
   "bearing": 0,
   "dragRotate": false,
   "latitude": 55.7558,
-  "longitude": 37.6173,
+  "longitude": 37.5915,
   "pitch": 0,
   "zoom": 11,
   "isSplit": false
