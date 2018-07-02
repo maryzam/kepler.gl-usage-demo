@@ -32,7 +32,6 @@
 	color: #6A7485;
 }
 
-
 .side-panel footer, 
 .side-panel header {
 	padding: 5px 10px;
@@ -53,3 +52,37 @@
 	border-top: 1px solid #dadada;
 }
 
+.side-panel main {
+	text-align: center;
+	align-items: center;
+	padding: 5px 10px;
+}
+
+.side-panel .buttons {
+	padding-top: 10px;
+}
+
+.side-panel button {
+	padding: 5px 10px;
+	background: #252525;
+	border: 1px solid #00939C;
+	color: #dadada;
+}
+
+.side-panel button:hover {
+	background: #00939C;
+	color: #252525;
+}
+
+.side-panel .active {
+	background: #5DBABF;
+	color: #252525;
+}
+
+.side-panel button:first-child {
+	border-radius: 10px 0 0 10px;
+}
+
+.side-panel button:last-child {
+	border-radius: 0 10px 10px 0;
+}
