@@ -1,5 +1,4 @@
 import React from 'react';
-import SidePanel from './SidePanel';
 
 import { 
 	injectComponents, 
@@ -7,16 +6,14 @@ import {
 	SidePanelFactory,
 } from 'kepler.gl/components';
 
-// define null factory to don not renrder any unnesesary components
+// define null factory to don not render any unnesesary components
 const NullComponent = () => null;
 const nullComponentFactory = () => NullComponent;
-
-const customSidePanelFactory = () => SidePanel;
 
 // Remove default upload modal dialog & side panel 
 const KeplerGl = injectComponents([
   [ModalContainerFactory, nullComponentFactory],
-  [SidePanelFactory, customSidePanelFactory],
+  [SidePanelFactory, nullComponentFactory],
 ]);
 
 export default KeplerGl;

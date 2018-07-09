@@ -1,5 +1,5 @@
 
-.side-panel {
+.info-panel {
 	z-index: 100;
 
 	position: absolute;
@@ -23,66 +23,66 @@
 	flex-direction: column;
 }
 
-.side-panel main {
+.info-panel main {
 	flex: 1 0 auto;
 }
 
-.side-panel header p {
+.info-panel header p {
 	text-align: center;
 	color: #6A7485;
 }
 
-.side-panel footer, 
-.side-panel header {
+.info-panel footer, 
+.info-panel header {
 	padding: 5px 10px;
 	background: #252525;
 	flex-shrink: 0;
 }
 
-.side-panel h2 {
+.info-panel h2 {
 	text-align: center;
 }
 
-.side-panel header {
+.info-panel header {
 	border-bottom: 1px solid #dadada;
 }
 
-.side-panel footer {
+.info-panel footer {
 	font-size: 0.75em;
 	border-top: 1px solid #dadada;
 }
 
-.side-panel main {
+.info-panel main {
 	text-align: center;
 	align-items: center;
 	padding: 5px 10px;
 }
 
-.side-panel .buttons {
+.info-panel .buttons {
 	padding-top: 10px;
 }
 
-.side-panel button {
+.info-panel button {
 	padding: 5px 10px;
 	background: #252525;
 	border: 1px solid #00939C;
 	color: #dadada;
 }
 
-.side-panel button:hover {
+.info-panel button:hover {
 	background: #00939C;
 	color: #252525;
 }
 
-.side-panel .active {
+.info-panel .active {
 	background: #5DBABF;
 	color: #252525;
 }
 
-.side-panel button:first-child {
+.info-panel button:first-child {
 	border-radius: 10px 0 0 10px;
 }
 
-.side-panel button:last-child {
+.info-panel button:last-child {
 	border-radius: 0 10px 10px 0;
 }

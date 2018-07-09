@@ -1,13 +1,14 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { throttle } from 'lodash';
-import { addDataToMap, receiveMapConfig } from 'kepler.gl/actions';
+import { addDataToMap, receiveMapConfig, wrapTo } from 'kepler.gl/actions';
 
-import Map from './components/Map';
+import InfoPanel from './components/InfoPanel';
+import ParkingMap from './components/ParkingMap';
 import { getMapConfig, MAP_MODE } from './configs/map';
 
 import Processors from 'kepler.gl/processors';
-import parkingData from './data/parking-csv';
+import data from './data/parking-csv';
 
 class App extends React.Component {
 
@@ -17,29 +18,44 @@ class App extends React.Component {
     	height: window.innerHeight
 	};
 
-	_updateSize = () => {
+	updateSize = () => {
 		this.setState({
 	      width: window.innerWidth,
 	      height: window.innerHeight
 	    });
 	}
 
+	updateView = (mode) => {
+
+		const config = getMapConfig(mode);
+		const datasets = [{
+				          	info: { 
+				          		id: 'parking_data',
+				          		label: 'Moscow Paid Parking' 
+				          	},
+				          	data: Processors.processCsvData(data)
+				         }];
+
+		this.props.dispatch(
+				addDataToMap({
+					datasets,
+			        config
+				})
+			);
+	}
+
+	toggleMapMode = ({ target }) => {
+
+		const mapMode = target.dataset.mode;
+		this.updateView(mapMode);
+		this.setState({ mapMode });
+	}
+
 	componentDidMount() {
-		const { mapMode } = this.state;
-		const config = getMapConfig(mapMode);
 
-		this.props.dispatch(addDataToMap({
-			datasets: [{
-	          	info: {
-	           		label: 'Moscow Paid Parking',
-	           		id: 'parking_data'
-	           	},
-	          	data: Processors.processCsvData(parkingData)
-	        }],
-	        config
-		}));
+		this.updateView(this.state.mapMode);
 
-		this.onResize = throttle(this._updateSize, 150, { trailing: true });
+		this.onResize = throttle(this.updateSize, 150, { trailing: true });
 		window.addEventListener('resize', this.onResize);
 	}
 
@@ -48,13 +64,20 @@ class App extends React.Component {
 	}
 
 	render() {
-		const { width, height } = this.state;
+		console.log('render!');
+		const { width, height, mapMode } = this.state;
 
 		return (
-			<Map 
-				width={ width }
-				height={ height }
-			/>
+			<Fragment>
+				<InfoPanel 
+					mode={ mapMode }
+					onToggle={ this.toggleMapMode }
+				/>
+				<ParkingMap 
+					width={ width }
+					height={ height }
+				/>
+			</Fragment>
 		);
 	}
 }

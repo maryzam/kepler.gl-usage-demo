@@ -4,13 +4,15 @@ import KeplerGl from './KeplerGl';
 
 const mapboxAccessToken = process.env.MapboxAccessToken;
 
-const Map = (props) => (
+const ParkingMap = (props) => (
   	<KeplerGl
-	      id="map"
+	      id="parking_map"
 	      mapboxApiAccessToken={mapboxAccessToken}
 	      width={ props.width }
 	      height={ props.height } 
+	      mint={ false }
+
     />
 );
 
-export default Map;
+export default ParkingMap;
