@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { throttle } from 'lodash';
-import { addDataToMap, receiveMapConfig, wrapTo } from 'kepler.gl/actions';
+import { addDataToMap, receiveMapConfig } from 'kepler.gl/actions';
 
 import InfoPanel from './components/InfoPanel';
 import ParkingMap from './components/ParkingMap';
@@ -51,10 +51,16 @@ class App extends React.Component {
 		this.setState({ mapMode });
 	}
 
+	shouldComponentUpdate(nextProps, nextState) {
+		const { mapMode, width, height } = this.state;
+		return (mapMode !== nextState.mapMode) ||
+			Math.abs(width - nextState.width) > 0.5 ||
+			Math.abs(height - nextState.height) > 0.5;
+	}
+
 	componentDidMount() {
-
 		this.updateView(this.state.mapMode);
-
+		
 		this.onResize = throttle(this.updateSize, 150, { trailing: true });
 		window.addEventListener('resize', this.onResize);
 	}
@@ -64,7 +70,6 @@ class App extends React.Component {
 	}
 
 	render() {
-		console.log('render!');
 		const { width, height, mapMode } = this.state;
 
 		return (

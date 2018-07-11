@@ -12,7 +12,7 @@ function getCssClass(btnMode, currentMode) {
 const Header = () => (
 		<header>
 			<h2>Moscow Parking</h2>
-			<p>Map of all Paid Parking at Moscow streets with car capacity & pricing information</p>
+			<p>Map of all Paid Parking on Moscow streets <small>(including car capacity & pricing information)</small></p>
 		</header>
 	);
 

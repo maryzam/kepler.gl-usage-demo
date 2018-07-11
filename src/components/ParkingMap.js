@@ -11,7 +11,6 @@ const ParkingMap = (props) => (
 	      width={ props.width }
 	      height={ props.height } 
 	      mint={ false }
-
     />
 );
 
