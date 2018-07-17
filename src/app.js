@@ -1,10 +1,11 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { throttle } from 'lodash';
-import { addDataToMap, receiveMapConfig } from 'kepler.gl/actions';
+import { addDataToMap } from 'kepler.gl/actions';
 
 import InfoPanel from './components/InfoPanel';
 import ParkingMap from './components/ParkingMap';
+
 import { getMapConfig, MAP_MODE } from './configs/map';
 
 import Processors from 'kepler.gl/processors';
@@ -25,8 +26,7 @@ class App extends React.Component {
 	    });
 	}
 
-	updateView = (mode) => {
-
+	updateMap = (mode) => {
 		const config = getMapConfig(mode);
 		const datasets = [{
 				          	info: { 
@@ -47,7 +47,7 @@ class App extends React.Component {
 	toggleMapMode = ({ target }) => {
 
 		const mapMode = target.dataset.mode;
-		this.updateView(mapMode);
+		this.updateMap(mapMode);
 		this.setState({ mapMode });
 	}
 
@@ -59,7 +59,7 @@ class App extends React.Component {
 	}
 
 	componentDidMount() {
-		this.updateView(this.state.mapMode);
+		this.updateMap(this.state.mapMode);
 		
 		this.onResize = throttle(this.updateSize, 150, { trailing: true });
 		window.addEventListener('resize', this.onResize);

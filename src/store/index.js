@@ -9,8 +9,10 @@ const initialState = {}
 const middlewares = [taskMiddleware]
 const enhancers = [applyMiddleware(...middlewares)];
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 export default createStore(
   reducers,
   initialState,
-  compose(...enhancers)
+  composeEnhancers(...enhancers)
 );
