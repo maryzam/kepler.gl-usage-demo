@@ -1,6 +1,6 @@
 
 import React from 'react';
-import KeplerGl from './KeplerGl';
+import KeplerGl from 'kepler.gl';
 
 const mapboxAccessToken = process.env.MapboxAccessToken;
 

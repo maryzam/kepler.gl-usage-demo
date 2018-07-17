@@ -13,7 +13,7 @@
     "url": "https://github.com/maryzam/kepler.gl-usage-demo/issues"
   },
   "dependencies": {
-    "kepler.gl": "0.0.22",
+    "kepler.gl": "0.0.25",
     "lodash": "^4.17.10",
     "react": "^16.4.1",
     "react-dom": "^16.4.1",
