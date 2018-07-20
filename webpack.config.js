@@ -11,7 +11,8 @@
     devServer: {
         inline: true,
         contentBase: './',
-        port: 3000
+        port: 3000,
+        lazy: true
     },
     module: {
          rules: [

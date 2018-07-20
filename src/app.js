@@ -1,15 +1,14 @@
 import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { throttle } from 'lodash';
-import { addDataToMap } from 'kepler.gl/actions';
+import { wrapTo, addDataToMap } from 'kepler.gl/actions';
+
+import { loadParkingData } from './store/actions';
 
 import InfoPanel from './components/InfoPanel';
 import ParkingMap from './components/ParkingMap';
 
 import { getMapConfig, MAP_MODE } from './configs/map';
-
-import Processors from 'kepler.gl/processors';
-import data from './data/parking-csv';
 
 class App extends React.Component {
 
@@ -28,20 +27,10 @@ class App extends React.Component {
 
 	updateMap = (mode) => {
 		const config = getMapConfig(mode);
-		const datasets = [{
-				          	info: { 
-				          		id: 'parking_data',
-				          		label: 'Moscow Paid Parking' 
-				          	},
-				          	data: Processors.processCsvData(data)
-				         }];
-
 		this.props.dispatch(
-				addDataToMap({
-					datasets,
-			        config
-				})
-			);
+			wrapTo('parking_map',
+				addDataToMap({ datasets: [], config })
+			));
 	}
 
 	toggleMapMode = ({ target }) => {
@@ -52,6 +41,7 @@ class App extends React.Component {
 	}
 
 	shouldComponentUpdate(nextProps, nextState) {
+		console.log(this.props.app.isLoading);
 		const { mapMode, width, height } = this.state;
 		return (mapMode !== nextState.mapMode) ||
 			Math.abs(width - nextState.width) > 0.5 ||
@@ -59,6 +49,7 @@ class App extends React.Component {
 	}
 
 	componentDidMount() {
+		this.props.dispatch(loadParkingData());
 		this.updateMap(this.state.mapMode);
 		
 		this.onResize = throttle(this.updateSize, 150, { trailing: true });

@@ -2,8 +2,16 @@ import { combineReducers } from 'redux';
 
 import keplerGlReducer from 'kepler.gl/reducers';
 
+import { SET_LOADING_STATUS } from './actions';
+
 const appReducer = function (state = {}, action) {
-	return state; // do nothing for now
+	if (action.type === SET_LOADING_STATUS) {
+		return ({
+			...state,
+			isLoading: action.isLoading
+		})
+	}
+	return state; 
 }
 
 const mapReducer = keplerGlReducer
