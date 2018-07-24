@@ -6,8 +6,8 @@ import thunkMiddleware from 'redux-thunk';
 import reducers from './reducers';
  
 // using enhancers
-const initialState = {}
-const middlewares = [taskMiddleware, thunkMiddleware]
+const initialState = { };
+const middlewares = [taskMiddleware, thunkMiddleware];
 const enhancers = [applyMiddleware(...middlewares)];
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

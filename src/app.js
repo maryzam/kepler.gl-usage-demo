@@ -52,7 +52,6 @@ class App extends React.Component {
 
 		const { width, height } = this.state;
 		const  { mapMode } = this.props.app;
-
 		return (
 			<Fragment>
 				<InfoPanel 

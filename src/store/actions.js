@@ -4,9 +4,9 @@ import { wrapTo, addDataToMap } from 'kepler.gl/actions';
 
 import { getMapConfig } from '../configs/map';
 
-export const SET_LOADING_STATUS = 'SET_LOADING_STATUS';
+export const REQUEST_PARKING_DATA = 'REQUEST_PARKING_DATA';
+export const GET_PARKING_DATA = 'GET_PARKING_DATA';
 export const SET_MAP_MODE = 'SET_MAP_MODE'
-export const UPDATE_DATASET = 'UPDATE_DATASET';
 
 const demoDataUrl = 'data/parking.csv';
 const info = { 
@@ -18,11 +18,14 @@ export function loadParkingData(mapMode) {
 	
     return (dispatch) => {
     	
-        dispatch( setLoadingStatus(true) );
+        dispatch( requestParkingData() );
         
         fetch(demoDataUrl)
         	.then(response => response.text())
             .then(source => {
+            	
+            	dispatch( getParkingData() );
+
 				const data = Processors.processCsvData(source);
 				const config = getMapConfig(mapMode);
 				const datasets = [{ info, data }]; 
@@ -35,7 +38,6 @@ export function loadParkingData(mapMode) {
 						})
 					)); 
 
-            	dispatch( setLoadingStatus(false) );
 		    }); 
     };
 }
@@ -66,10 +68,15 @@ function setMapMode(mapMode) {
     };
 }
 
-function setLoadingStatus(isLoading) {
+function requestParkingData() {
 	return {
-        type: SET_LOADING_STATUS,
-        isLoading
+        type: REQUEST_PARKING_DATA
+    };
+}
+
+function getParkingData() {
+	return {
+        type: GET_PARKING_DATA
     };
 }
 
