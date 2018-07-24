@@ -3,25 +3,19 @@ import { connect } from 'react-redux';
 import { throttle } from 'lodash';
 
 import KeplerGlSchema from 'kepler.gl/schemas';
-import { wrapTo, addDataToMap } from 'kepler.gl/actions';
+import { wrapTo, addDataToMap, receiveMapConfig } from 'kepler.gl/actions';
 
-import { loadParkingData } from './store/actions';
+import { loadParkingData, toggleMapMode } from './store/actions';
 
 import InfoPanel from './components/InfoPanel';
 import ParkingMap from './components/ParkingMap';
 
-import { getMapConfig, MAP_MODE } from './configs/map';
-
-const initialDataset = {
-			       			info: { 
-			       				id: 'parking_data', 
-			       				label: 'Moscow Paid Parking' },
-				          	data: []
-				        };
+import { MAP_MODE } from './configs/map';
 
 class App extends React.Component {
 
 	state = {
+		mapMode: MAP_MODE.POINT,
 		width: window.innerWidth,
     	height: window.innerHeight
 	};
@@ -33,27 +27,10 @@ class App extends React.Component {
 	    });
 	}
 
-	updateMap = (mode) => {
-		/*const config = getMapConfig(mode);
-		const datasets = this.getMapDataset();
-		this.props.dispatch(
-			wrapTo('parking_map',
-				addDataToMap({ datasets , config })
-			)); */
-	}
-
 	toggleMapMode = ({ target }) => {
 		const mapMode = target.dataset.mode;
-		this.updateMap(mapMode);
+		this.props.dispatch( toggleMapMode(mapMode) );
 		this.setState({ mapMode });
-	}
-
-	getMapDataset() {
-		const { keplerGl } = this.props;
-	    const { parking_map } = keplerGl;
-	    return !parking_map ? 
-	    			initialDataset:
-	    			KeplerGlSchema.getDatasetToSave(parking_map);
 	}
 
 /*	shouldComponentUpdate(nextProps, nextState) {
@@ -65,8 +42,6 @@ class App extends React.Component {
 
 	componentDidMount() {
 		this.props.dispatch(loadParkingData());
-		//this.updateMap(this.state.mapMode);
-		
 		this.onResize = throttle(this.updateSize, 150, { trailing: true });
 		window.addEventListener('resize', this.onResize);
 	}
@@ -76,11 +51,6 @@ class App extends React.Component {
 	}
 
 	render() {
-		console.log("render");
-		const map = this.props.keplerGl.parking_map;
-		if (!!map) {
-			console.log(map.visState)
-		};
 
 		const { width, height, mapMode } = this.state;
 
