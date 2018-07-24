@@ -6,6 +6,10 @@
 	font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
 
+body {
+	background: black;
+}
+
 a {
 	color: #6A7485;;
 }
