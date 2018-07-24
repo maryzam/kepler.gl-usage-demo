@@ -10,12 +10,9 @@ import { loadParkingData, toggleMapMode } from './store/actions';
 import InfoPanel from './components/InfoPanel';
 import ParkingMap from './components/ParkingMap';
 
-import { MAP_MODE } from './configs/map';
-
 class App extends React.Component {
 
 	state = {
-		mapMode: MAP_MODE.POINT,
 		width: window.innerWidth,
     	height: window.innerHeight
 	};
@@ -28,17 +25,18 @@ class App extends React.Component {
 	}
 
 	toggleMapMode = ({ target }) => {
-		const mapMode = target.dataset.mode;
-		this.props.dispatch( toggleMapMode(mapMode) );
-		this.setState({ mapMode });
+		const { mode } = target.dataset;
+		this.props.dispatch( toggleMapMode(mode) );
 	}
 
-/*	shouldComponentUpdate(nextProps, nextState) {
-		const { mapMode, width, height } = this.state;
-		return (mapMode !== nextState.mapMode) ||
+	shouldComponentUpdate(nextProps, nextState) {
+		const { width, height } = this.state;
+		const  { mapMode } = this.props.app;
+
+		return (mapMode !== nextProps.app.mapMode) ||
 			Math.abs(width - nextState.width) > 0.5 ||
 			Math.abs(height - nextState.height) > 0.5;
-	} */
+	} 
 
 	componentDidMount() {
 		this.props.dispatch(loadParkingData());
@@ -52,7 +50,8 @@ class App extends React.Component {
 
 	render() {
 
-		const { width, height, mapMode } = this.state;
+		const { width, height } = this.state;
+		const  { mapMode } = this.props.app;
 
 		return (
 			<Fragment>

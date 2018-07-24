@@ -5,6 +5,7 @@ import { wrapTo, addDataToMap } from 'kepler.gl/actions';
 import { getMapConfig } from '../configs/map';
 
 export const SET_LOADING_STATUS = 'SET_LOADING_STATUS';
+export const SET_MAP_MODE = 'SET_MAP_MODE'
 export const UPDATE_DATASET = 'UPDATE_DATASET';
 
 const demoDataUrl = 'data/parking.csv';
@@ -17,13 +18,24 @@ export function loadParkingData(mapMode) {
 	
     return (dispatch) => {
     	
-        setLoadingStatus(dispatch, true);
+        dispatch( setLoadingStatus(true) );
         
         fetch(demoDataUrl)
         	.then(response => response.text())
-            .then(data => {
-            	setLoadingStatus(dispatch, false);
-            	setLoadedData(dispatch, data, mapMode);
+            .then(source => {
+				const data = Processors.processCsvData(source);
+				const config = getMapConfig(mapMode);
+				const datasets = [{ info, data }]; 
+
+				dispatch(
+				   	wrapTo('parking_map',
+						addDataToMap({
+							datasets,
+							config
+						})
+					)); 
+
+            	dispatch( setLoadingStatus(false) );
 		    }); 
     };
 }
@@ -42,14 +54,32 @@ export function toggleMapMode(mode) {
 					config
 				})
 			)); 
+
+        dispatch( setMapMode(mode) );
+    };
+}
+
+function setMapMode(mapMode) {
+	return {
+        type: SET_MAP_MODE,
+        mapMode
+    };
+}
+
+function setLoadingStatus(isLoading) {
+	return {
+        type: SET_LOADING_STATUS,
+        isLoading
     };
 }
 
 function getDatasets({ keplerGl }) {
+	
 	const map = keplerGl.parking_map;
 	if (!map || !map.visState) {
 		return [];
 	}
+
 	const { parking_data } = map.visState.datasets;
 	return [{
 				info,
@@ -58,26 +88,4 @@ function getDatasets({ keplerGl }) {
 				    rows: parking_data.allData
 				}
 			}];
-}
-
-function setLoadingStatus(dispatch, isLoading = false) {
-	dispatch({
-        type: SET_LOADING_STATUS,
-        isLoading
-    });
-}
-
-function setLoadedData(dispatch, source, mapMode) {
-	
-	const data = Processors.processCsvData(source);
-	const config = getMapConfig(mapMode);
-	const datasets = [{ info, data }]; 
-
-	dispatch(
-	   	wrapTo('parking_map',
-			addDataToMap({
-				datasets,
-				config
-			})
-		)); 
 }
