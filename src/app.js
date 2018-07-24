@@ -31,9 +31,10 @@ class App extends React.Component {
 
 	shouldComponentUpdate(nextProps, nextState) {
 		const { width, height } = this.state;
-		const  { mapMode } = this.props.app;
+		const  { mapMode, isLoading } = this.props.app;
 
 		return (mapMode !== nextProps.app.mapMode) ||
+			(isLoading !== nextProps.app.isLoading) ||
 			Math.abs(width - nextState.width) > 0.5 ||
 			Math.abs(height - nextState.height) > 0.5;
 	} 
@@ -51,11 +52,12 @@ class App extends React.Component {
 	render() {
 
 		const { width, height } = this.state;
-		const  { mapMode } = this.props.app;
+		const  { mapMode, isLoading } = this.props.app;
 		return (
 			<Fragment>
 				<InfoPanel 
 					mode={ mapMode }
+					isLoading= { isLoading }
 					onToggle={ this.toggleMapMode }
 				/>
 				<ParkingMap 

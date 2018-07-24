@@ -12,28 +12,34 @@ function getCssClass(btnMode, currentMode) {
 		'';
 }
 
-const InfoPanel = ({ mode, onToggle }) => {
+const InfoPanel = ({ mode, isLoading, onToggle }) => {
 
 		return (
 			<div className="info-panel">
 				<Header />
-				<main>
-					<p>Switch between view modes</p>
-					<div className="buttons">
-						<button 
-							data-mode={ MAP_MODE.POINTS }
-							className={ getCssClass(MAP_MODE.POINTS, mode) }
-							onClick={ onToggle }>
-							Overview
-						</button>
-						<button 
-							data-mode={ MAP_MODE.GRID }
-							className={ getCssClass(MAP_MODE.GRID, mode) }
-							onClick={ onToggle }>
-							Aggregated
-						</button>
-					</div>
-				</main>
+				{
+					isLoading ? 
+					( <main>
+							<div className="preloader"></div> 
+					  </main> ) :
+					( <main>
+					        <p>Switch between view modes</p>
+						    <div className="buttons">
+								<button 
+									data-mode={ MAP_MODE.POINTS }
+									className={ getCssClass(MAP_MODE.POINTS, mode) }
+									onClick={ onToggle }>
+									Overview
+								</button>
+								<button 
+									data-mode={ MAP_MODE.GRID }
+									className={ getCssClass(MAP_MODE.GRID, mode) }
+									onClick={ onToggle }>
+									Aggregated
+								</button>
+						    </div> 
+					  </main> )
+				}
 				<Footer />
 			</div>);
 };
