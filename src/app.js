@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { throttle } from 'lodash';
 
 import KeplerGlSchema from 'kepler.gl/schemas';
-import { wrapTo, addDataToMap, receiveMapConfig } from 'kepler.gl/actions';
 
 import { loadParkingData, toggleMapMode } from './store/actions';
 

@@ -6,7 +6,7 @@ import {
 	SidePanelFactory,
 } from 'kepler.gl/components';
 
-// define null factory to don not renrder any unnesesary components
+// define null factory to don not render any unneсesыary components
 const NullComponent = () => null;
 const nullComponentFactory = () => NullComponent;
 
